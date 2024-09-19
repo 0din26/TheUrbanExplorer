@@ -9,6 +9,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import java.util.Collections;
+import java.util.Comparator;
+
 
 public class UrbanExplorer {
 
@@ -90,20 +93,38 @@ public class UrbanExplorer {
      */
     public void addCity() {
         String newCity = inputField.getText();
-
+        //sortCities();
         if (!newCity.isEmpty()) {
             cities.add(new City(newCity));
             refreshList();
             inputField.clear();
         }
+        sortCities();
     }
 
     /**
      * Sorts the cities in the 'cities' list based on their names.
      */
-    public void sortCities() {
+    //public void sortCities() {
         
-
+        //City first = cities.get(0);
+        //ArrayList <City> newCities = cities;
+        //for(int i = 0; i < cities.size(); i++) {
+        //    if(cities.get(i).getName().compareTo(first.getName()) > 0)
+        //        newCities.set(i, cities.get(i));
+        //}
+        //cities = newCities;
+    //    Collections.sort(cities, new Comparator<City>());
+    //}
+    public void sortCities() {
+        // Use Collections.sort with a custom comparator
+        Collections.sort(cities, new Comparator<City>() {
+            @Override
+            public int compare(City c1, City c2) {
+                // Compare city names alphabetically
+                return c1.getName().compareTo(c2.getName());
+            }
+        });
     }
 
     /**
@@ -113,10 +134,11 @@ public class UrbanExplorer {
      */
     public void refreshList() {
         listView.getItems().clear();
-
+        sortCities();
         for (City city : cities) {
             listView.getItems().add(city.getName());
         }
+        //sortCities();
     }
 
     /**
